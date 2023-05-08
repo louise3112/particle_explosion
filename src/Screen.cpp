@@ -53,17 +53,34 @@ namespace particleExplosion {
 		// memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
 		// Loops through every pixel and changes the colour value of each pixel based on hexadecimal codes:
-		for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
-			m_buffer[i] = 0xFFFFFFFF;
-		}
+//		for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
+//			m_buffer[i] = 0xFFFFFFFF;
+//		}
 
-		// We then need to update the window:
+		return true;
+	}
+
+	// Loops through every pixel and changes the colour value of each pixel based on hexadecimal codes:
+	void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
+
+		Uint32 colour = 0;  // 0x00000000
+
+		colour += red; // 0x000000RR
+		colour <<= 8;  // 0x0000RR00
+		colour += green;  // 0x0000RRGG
+		colour <<= 8;  // 0x00RRGG00
+		colour += blue;  // 0x00RRGGBB
+		colour <<= 8;  // 0xRRGGBB00
+		colour += 0xFF;  // 0xRRGGBBFF
+
+		m_buffer[(y * SCREEN_WIDTH) + x] = colour;
+	}
+
+	void Screen::update() {
 		SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32));  // Copy pixels to the texture;
 		SDL_RenderClear(m_renderer);  // Clear existing render;
 		SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);  // Copy texture over to render;
 		SDL_RenderPresent(m_renderer);  // Update screen with new render;
-
-		return true;
 	}
 
 	bool Screen::processEvents() {
