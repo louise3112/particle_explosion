@@ -1,4 +1,4 @@
-src/particle_explosion.o: ../src/particle_explosion.cpp ../src/Screen.h \
+src/Screen.o: ../src/Screen.cpp ../src/Screen.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_main.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_stdinc.h \
