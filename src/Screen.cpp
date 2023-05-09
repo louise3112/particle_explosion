@@ -76,11 +76,6 @@ namespace particleExplosion {
 		m_buffer1[(y * SCREEN_WIDTH) + x] = colour;
 	}
 
-//	void Screen::clear() {
-//		// Sets the RGBA values for all pixels in the screen (either in RGB or hexadecimal values) to be the same colour, in this case white:
-//		memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
-//	}
-
 	void Screen::update() {
 		SDL_UpdateTexture(m_texture, NULL, m_buffer1, SCREEN_WIDTH * sizeof(Uint32));  // Copy pixels to the texture;
 		SDL_RenderClear(m_renderer);  // Clear existing render;

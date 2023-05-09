@@ -1,11 +1,3 @@
-//============================================================================
-// Name        : particle_explosion.cpp
-// Author      : Louise Cuthbertson
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 // Using SDL 2 library as a GUI API. SDL2 was installed in terminal by typing "brew install sdl2"
 
 #include <iostream>
@@ -32,13 +24,10 @@ int main() {
 	Swarm swarm;
 
 	while (true) {
+
 		// Update particles
-
-
-		// Draw particles:
 		int msElapsed = SDL_GetTicks();
 
-//		screen.clear();
 		swarm.update(msElapsed);
 
 		unsigned char red = (1 + sin(msElapsed * 0.0001)) * 128;
@@ -56,6 +45,7 @@ int main() {
 			screen.setPixel(x, y, red, green, blue);
 		}
 
+		// Draw particles:
 		screen.boxBlur();
 
 		// Draw the screen:

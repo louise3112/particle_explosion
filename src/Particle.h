@@ -16,13 +16,14 @@ namespace particleExplosion {
 		double m_x;
 		double m_y;
 
-		// Sets the x and y speeds between -1 and 1 based on cartesian coordinates:
-//		double m_xSpeed;
-//		double m_ySpeed;
 	private:
 		// Sets the speed and direction based on polar coordinates:
 		double m_speed;
 		double m_direction;
+
+		// Sets the x and y speeds between -1 and 1 based on cartesian coordinates:
+		// double m_xSpeed;
+		// double m_ySpeed;
 
 	private:
 		void init();

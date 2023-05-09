@@ -21,32 +21,19 @@ namespace particleExplosion {
 		m_x = 0;
 		m_y = 0;
 
-		// Sets the x and y speeds between -1 and 1 based on cartesian coordinates:
-//		m_xSpeed = 0.01 * (((2.0 * rand()) / RAND_MAX) - 1);
-//		m_ySpeed = 0.01 * (((2.0 * rand()) / RAND_MAX) - 1);
-
 		// Sets the direction (in radians) and speed:
 		m_direction = (2 * M_PI * rand()) / RAND_MAX;
 		m_speed = (0.04 * rand()) / RAND_MAX;
 
 		// Increase the distance between particles to change the distribution and make it less blocky:
 		m_speed *= m_speed;
+
+		// Sets the x and y speeds between -1 and 1 based on cartesian coordinates:
+		// m_xSpeed = 0.01 * (((2.0 * rand()) / RAND_MAX) - 1);
+		// m_ySpeed = 0.01 * (((2.0 * rand()) / RAND_MAX) - 1);
 	}
 
 	void Particle::update(int interval) {
-
-		// The update function for x and y based on cartesian coordinates:
-//		m_x += m_xSpeed;
-//		m_y += m_ySpeed;
-//
-//		// If the particle falls off the edge of the screen, we negate it's speed so it moves in the opposite direction:
-//		if (m_x < -1.0 || m_x >= 1.0) {
-//			m_xSpeed = -m_xSpeed;
-//		}
-//
-//		if (m_y < -1.0 || m_y >= 1.0) {
-//			m_ySpeed = -m_ySpeed;
-//		}
 
 		// Give a curl effect to the direction:
 		m_direction += interval * 0.0004;
@@ -67,6 +54,19 @@ namespace particleExplosion {
 		if (rand() < RAND_MAX / 100) {
 			init();
 		}
+
+		// The update function for x and y based on cartesian coordinates:
+		// m_x += m_xSpeed;
+		// m_y += m_ySpeed;
+
+		// If the particle falls off the edge of the screen, we negate it's speed so it moves in the opposite direction:
+		// if (m_x < -1.0 || m_x >= 1.0) {
+		//  	m_xSpeed = -m_xSpeed;
+		// }
+
+		// if (m_y < -1.0 || m_y >= 1.0) {
+		//  	m_ySpeed = -m_ySpeed;
+		// }
 	}
 
 	Particle::~Particle() {}
