@@ -9,7 +9,7 @@
 
 namespace particleExplosion {
 
-	Screen::Screen(): m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer(NULL) {}
+	Screen::Screen(): m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer1(NULL), m_buffer2(NULL) {}
 
 	bool Screen::init() {
 
@@ -46,7 +46,11 @@ namespace particleExplosion {
 
 		// Need to allocate enough memory for each pixel in the screen.
 		// Uint32 is a SDL2 data type that is equivalent to 32 bits (approx the size of an int) - this matches the 8 bits set aside for each RGBA value for each pixel.
-		m_buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+		m_buffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+		m_buffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+
+		memset(m_buffer1, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+		memset(m_buffer2, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
 		return true;
 	}
@@ -69,19 +73,63 @@ namespace particleExplosion {
 		colour <<= 8;  // 0xRRGGBB00
 		colour += 0xFF;  // 0xRRGGBBFF
 
-		m_buffer[(y * SCREEN_WIDTH) + x] = colour;
+		m_buffer1[(y * SCREEN_WIDTH) + x] = colour;
 	}
 
-	void Screen::clear() {
-		// Sets the RGBA values for all pixels in the screen (either in RGB or hexadecimal values) to be the same colour, in this case white:
-		memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
-	}
+//	void Screen::clear() {
+//		// Sets the RGBA values for all pixels in the screen (either in RGB or hexadecimal values) to be the same colour, in this case white:
+//		memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+//	}
 
 	void Screen::update() {
-		SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32));  // Copy pixels to the texture;
+		SDL_UpdateTexture(m_texture, NULL, m_buffer1, SCREEN_WIDTH * sizeof(Uint32));  // Copy pixels to the texture;
 		SDL_RenderClear(m_renderer);  // Clear existing render;
 		SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);  // Copy texture over to render;
 		SDL_RenderPresent(m_renderer);  // Update screen with new render;
+	}
+
+	void Screen::boxBlur() {
+		// Swap the buffers so pixel info is in m_buffer2 and we are drawing to m_buffer1:
+		Uint32 *temp = m_buffer1;
+		m_buffer1 = m_buffer2;
+		m_buffer2 = temp;
+
+		// Iterate through every pixel on the screen:
+		for (int y = 0; y < SCREEN_HEIGHT; y++) {
+			for (int x = 0; x < SCREEN_WIDTH; x++) {
+
+				int redTotal = 0;
+				int greenTotal = 0;
+				int blueTotal = 0;
+
+				// Iterate through the bits in a square surrounding the pixel at position x, y:
+				for (int row = -1; row <= 1; row++) {
+					for (int col = -1; col <= 1; col++) {
+						int xCurrent = x + col;
+						int yCurrent = y + row;
+
+						// For each pixel in this square that is still on the screen, get the colour:
+						if (xCurrent >= 0 && xCurrent < SCREEN_WIDTH && yCurrent >=0 && yCurrent < SCREEN_HEIGHT) {
+							Uint32 colour = m_buffer2[(yCurrent * SCREEN_WIDTH) + xCurrent];
+
+							Uint8 red = colour >> 24;
+							Uint8 green = colour >> 16;
+							Uint8 blue = colour >> 8;
+
+							redTotal += red;
+							greenTotal += green;
+							blueTotal += blue;
+						}
+					}
+				}
+
+				Uint8 red = redTotal / 9;
+				Uint8 green = greenTotal / 9;
+				Uint8 blue = blueTotal / 9;
+
+				setPixel(x, y, red, green, blue);
+			}
+		}
 	}
 
 	bool Screen::processEvents() {
@@ -100,7 +148,8 @@ namespace particleExplosion {
 	}
 
 	void Screen::close() {
-		delete [] m_buffer;
+		delete [] m_buffer1;
+		delete [] m_buffer2;
 		SDL_DestroyTexture(m_texture);
 		SDL_DestroyRenderer(m_renderer);
 		SDL_DestroyWindow(m_window);

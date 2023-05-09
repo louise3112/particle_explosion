@@ -27,7 +27,7 @@ namespace particleExplosion {
 	public:
 		Particle();
 		virtual ~Particle();
-		void update();
+		void update(int interval);
 	};
 
 } /* namespace particleExplosion */

@@ -20,12 +20,12 @@ namespace particleExplosion {
 
 		// Sets the direction (in radians) and speed:
 		m_direction = (2 * M_PI * rand()) / RAND_MAX;
-		m_speed = (0.001 * rand()) / RAND_MAX;
+		m_speed = (0.0001 * rand()) / RAND_MAX;
 	}
 
 	Particle::~Particle() {}
 
-	void Particle::update() {
+	void Particle::update(int interval) {
 
 		// The update function for x and y based on cartesian coordinates:
 //		m_x += m_xSpeed;
@@ -44,8 +44,8 @@ namespace particleExplosion {
 		double xSpeed = m_speed * cos(m_direction);
 		double ySpeed = m_speed * sin(m_direction);
 
-		m_x += xSpeed;
-		m_y += ySpeed;
+		m_x += xSpeed * interval;
+		m_y += ySpeed * interval;
 	}
 
 } /* namespace particleExplosion */

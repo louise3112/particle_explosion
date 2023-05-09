@@ -9,7 +9,7 @@
 
 namespace particleExplosion {
 
-	Swarm::Swarm() {
+	Swarm::Swarm(): lastTime(0) {
 		m_pParticles = new Particle[NPARTICLES];
 
 	}
@@ -18,10 +18,15 @@ namespace particleExplosion {
 		delete [] m_pParticles;
 	}
 
-	void Swarm::update() {
+	void Swarm::update(int msElapsed) {
+
+		int interval = msElapsed - lastTime;
+
 		for (int i = 0; i < NPARTICLES; i++) {
-			m_pParticles[i].update();
+			m_pParticles[i].update(interval);
 		}
+
+		lastTime = msElapsed;
 	}
 
 } /* namespace particleExplosion */
