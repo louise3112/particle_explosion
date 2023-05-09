@@ -19,15 +19,18 @@ namespace particleExplosion {
 		// Sets the x and y speeds between -1 and 1 based on cartesian coordinates:
 //		double m_xSpeed;
 //		double m_ySpeed;
-
+	private:
 		// Sets the speed and direction based on polar coordinates:
 		double m_speed;
 		double m_direction;
 
+	private:
+		void init();
+
 	public:
 		Particle();
-		virtual ~Particle();
 		void update(int interval);
+		virtual ~Particle();
 	};
 
 } /* namespace particleExplosion */
