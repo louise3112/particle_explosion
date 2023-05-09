@@ -4,15 +4,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/Particle.cpp \
 ../src/Screen.cpp \
+../src/Swarm.cpp \
 ../src/particle_explosion.cpp 
 
 CPP_DEPS += \
+./src/Particle.d \
 ./src/Screen.d \
+./src/Swarm.d \
 ./src/particle_explosion.d 
 
 OBJS += \
+./src/Particle.o \
 ./src/Screen.o \
+./src/Swarm.o \
 ./src/particle_explosion.o 
 
 
@@ -28,7 +34,7 @@ src/%.o: ../src/%.cpp src/subdir.mk
 clean: clean-src
 
 clean-src:
-	-$(RM) ./src/Screen.d ./src/Screen.o ./src/particle_explosion.d ./src/particle_explosion.o
+	-$(RM) ./src/Particle.d ./src/Particle.o ./src/Screen.d ./src/Screen.o ./src/Swarm.d ./src/Swarm.o ./src/particle_explosion.d ./src/particle_explosion.o
 
 .PHONY: clean-src
 

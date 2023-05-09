@@ -63,6 +63,11 @@ namespace particleExplosion {
 	// Loops through every pixel and changes the colour value of each pixel based on hexadecimal codes:
 	void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
 
+		// This ensures that the function will not set pixels that are off the edge of the screen:
+		if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT) {
+			return;
+		}
+
 		Uint32 colour = 0;  // 0x00000000
 
 		colour += red; // 0x000000RR

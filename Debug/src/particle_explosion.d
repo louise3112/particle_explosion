@@ -48,7 +48,8 @@ src/particle_explosion.o: ../src/particle_explosion.cpp ../src/Screen.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_timer.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_version.h \
   /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_locale.h \
-  /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_misc.h
+  /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_misc.h \
+  ../src/Swarm.h ../src/Particle.h
 
 ../src/Screen.h:
 
@@ -151,3 +152,7 @@ src/particle_explosion.o: ../src/particle_explosion.cpp ../src/Screen.h \
 /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_locale.h:
 
 /opt/homebrew/Cellar/sdl2/2.26.5/include/SDL2/SDL_misc.h:
+
+../src/Swarm.h:
+
+../src/Particle.h:
