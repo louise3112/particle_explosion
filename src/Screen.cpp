@@ -9,8 +9,7 @@
 
 namespace particleExplosion {
 
-	Screen::Screen(): m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer(NULL) {
-	}
+	Screen::Screen(): m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer(NULL) {}
 
 	bool Screen::init() {
 
@@ -49,14 +48,6 @@ namespace particleExplosion {
 		// Uint32 is a SDL2 data type that is equivalent to 32 bits (approx the size of an int) - this matches the 8 bits set aside for each RGBA value for each pixel.
 		m_buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 
-		// Sets the RGBA values for all pixels in the screen (either in RGB or hexadecimal values) to be the same colour:
-		// memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
-
-		// Loops through every pixel and changes the colour value of each pixel based on hexadecimal codes:
-//		for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
-//			m_buffer[i] = 0xFFFFFFFF;
-//		}
-
 		return true;
 	}
 
@@ -79,6 +70,11 @@ namespace particleExplosion {
 		colour += 0xFF;  // 0xRRGGBBFF
 
 		m_buffer[(y * SCREEN_WIDTH) + x] = colour;
+	}
+
+	void Screen::clear() {
+		// Sets the RGBA values for all pixels in the screen (either in RGB or hexadecimal values) to be the same colour, in this case white:
+		memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 	}
 
 	void Screen::update() {

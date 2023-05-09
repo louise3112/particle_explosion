@@ -37,26 +37,24 @@ int main() {
 
 		// Draw particles:
 		int msElapsed = SDL_GetTicks();
+
+		screen.clear();
+		swarm.update();
+
 		unsigned char red = (1 + sin(msElapsed * 0.0001)) * 128;
 		unsigned char green = (1 + sin(msElapsed * 0.0002)) * 128;
 		unsigned char blue = (1 + sin(msElapsed * 0.0003)) * 128;
 
 		const Particle * const pParticles = swarm.getParticles();
+
 		for (int i = 0; i < Swarm::NPARTICLES; i++) {
 			Particle particle = pParticles[i];
 
 			int x = (particle.m_x + 1) * (Screen::SCREEN_WIDTH / 2);
-			int y = (particle.m_y + 1) * (Screen::SCREEN_HEIGHT / 2);
+			int y = (particle.m_y * (Screen::SCREEN_WIDTH / 2)) + (Screen::SCREEN_HEIGHT / 2);  // Ensures explosion is circular, even on rectangular screen, and starts in middle of screen.
 
 			screen.setPixel(x, y, red, green, blue);
 		}
-
-		// To set the colour of the whole screen:
-//		for (int y = 0; y < Screen::SCREEN_HEIGHT; y++) {
-//			for (int x = 0; x < Screen::SCREEN_WIDTH; x++) {
-//				screen.setPixel(x, y, red, green, blue);
-//			}
-//		}
 
 		// Draw the screen:
 		screen.update();
